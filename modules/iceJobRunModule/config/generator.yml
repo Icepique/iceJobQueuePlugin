@@ -1,0 +1,44 @@
+generator:
+  class: IcePropelSecurityGenerator
+  param:
+    model_class:           iceModelJobRun
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              iceModelJobRun
+    plural:                job_runs
+    route_prefix:          ice_job_run
+    with_propel_route:     1
+    actions_base_class:    IceBackendActions
+
+    use_security_yaml_credentials: false
+
+    config:
+      actions: ~
+      fields:
+        id:            { label: ID }
+        list_status:   { label: Status }
+        list_progress: { label: Progress }
+        list_runtime:  { label: Run Time }
+        list_avgtime:  { label: Avg Time }
+        updated_at:    { label: Finished }
+        created_at:    { label: Started }
+      list:
+        title: Job Runs
+        display: [=id, context, crontab, _list_status, _list_progress, created_at, _list_runtime, _list_avgtime]
+        sort: [id, desc]
+        actions: []
+        batch_actions: []
+        object_actions:
+          details:
+            label: Details
+            action: details
+          run:
+            label: Run
+            action: run
+
+      filter:
+        class: false
+      form:    ~
+      edit:    ~
+      new:     ~

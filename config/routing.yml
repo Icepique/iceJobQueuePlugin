@@ -1,0 +1,27 @@
+ice_job_run:
+  class: sfPropelRouteCollection
+  options:
+    model:        iceModelJobRun
+    module:       iceJobRunModule
+    prefix_path:  /job-runs
+    column:       id
+    with_wildcard_routes: true
+
+ice_job_run_details:
+  url: /job-run/:id/details
+  class: sfPropelRoute
+  options: { model: iceModelJobRun, type: object, method: getObjectForRoute }
+  param: { module: iceJobRunModule, action: details }
+
+ice_job_run_chart:
+  url: /job-run/:id/chart/:type
+  class: sfPropelRoute
+  options: { model: iceModelJobRun, type: object, method: getObjectForRoute }
+  param: { module: iceJobRunModule, action: chart }
+  requirements: { sf_method: [GET], type: (?:memory|cpu|load) }
+
+ice_job_ajax:
+  url: /job/:id/ajax/:page.:sf_format
+  param: { module: iceJobModule, action: ajax, sf_format: json }
+  options: { extra_parameters_as_query_string: true }
+  requirements: { sf_format: (?:html|json) }
